@@ -31,6 +31,7 @@ A full-stack productivity tool that allows users to manage to-do items, summariz
 ## 📁 Project Structure
 
 ### Frontend
+````
 /frontend
 │
 ├── /src
@@ -46,9 +47,11 @@ A full-stack productivity tool that allows users to manage to-do items, summariz
 │   └── main.jsx
 ├── index.html
 └── package.json
+````
 
-###Backend
+### Backend
 
+````
 /backend
 │
 ├── /controllers
@@ -65,6 +68,7 @@ A full-stack productivity tool that allows users to manage to-do items, summariz
 ├── server.js
 └── package.json
 ---
+````
 
 ## ⚙️ API Endpoints
 
@@ -89,17 +93,17 @@ SLACK_WEBHOOK_URL=https://hooks.slack.com/services/XXXXXXXX
 OPENAI_API_KEY=sk-...
 ```
 
-##Cloning
+## Cloning
 git clone [https://github.com/akshatverma01/todo-summary-assistant.git](https://github.com/Akshatverma01/Todo-Assistant)
 cd todo-summary-assistant
 
-###Run Backend 
+### Run Backend 
 
 cd backend
 npm install
 npm run dev
 
-###Run Frontend 
+### Run Frontend 
 cd ../frontend
 npm install
 npm run dev
