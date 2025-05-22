@@ -1,4 +1,4 @@
-import { supabase } from "../db/supabaseClient.js";
+import {supabase} from "../db/supabaseClient.js";
 
 export const addTodo = async (req, res) => {
     const { title, description, status } = req.body;
