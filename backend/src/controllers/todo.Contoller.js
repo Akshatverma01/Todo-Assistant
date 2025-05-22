@@ -1,0 +1,46 @@
+import { supabase } from "../db/supabaseClient.js";
+
+export const addTodo = async (req, res) => {
+    const { title, description, status } = req.body;
+
+    try {
+        const { error, data } = await supabase.from("todoAssistant").insert({ title, description, status }).single();
+
+        if (error) {
+                throw new Error(error||"Error in adding the todo.")
+        }
+        return res.status(200).json({ data: data, error: "" })
+
+    } catch (error) {
+        return res.status(500).json({ data: "", error: error.message || "Internal Server Error" });
+    }
+}
+
+export const getPost = async () => {
+
+    try {
+        const { error, data } = await supabase.from("todoAssistant").select("*").order("created_at", { ascending: true })
+
+        if (error) {
+              throw new Error(error||"Error in returning the todo.")
+        }
+        return res.status(200).json({ data: data, error: "" })
+
+    } catch (error) {
+        return res.status(500).json({ data: "", error: error.message || "Internal Server Error" });
+    }
+}
+
+export const deletePost = async (req,res) => {
+    const { id } = req.params;
+       try {
+        const { error, data } = await supabase.from("todoAssistant").delete().eq("id", id)
+        if (error) {
+            throw new Error(error||"Error in deleting the todo.")
+        }
+        return res.status(200).json({ data: data, error: "" })
+
+    } catch (error) {
+        return res.status(500).json({ data: "", error: error.message || "Internal Server Error" });
+    }
+}
