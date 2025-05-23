@@ -1,16 +1,15 @@
-import {supabase} from "../db/supabaseClient.js";
+import { supabase } from "../db/supabaseClient.js";
 
 export const addTodo = async (req, res) => {
-    const { title, description, status } = req.body;
+    const { title, description } = req.body;
 
     try {
-        const { error, data } = await supabase.from("todoAssistant").insert({ title, description, status }).single();
-
-        if (error) {
-                throw new Error(error||"Error in adding the todo.")
-        }
-        return res.status(200).json({ data: data, error: "" })
-
+        const { error, data } = await supabase.from("todoAssistant").insert([{title: title,text: description, completed:false }]).single();
+        // if (error) {
+        //     throw new Error(error || "Error in adding the todo.")
+        // }
+        if (error) throw error;
+        return res.status(200).json({ data: data })
     } catch (error) {
         return res.status(500).json({ data: "", error: error.message || "Internal Server Error" });
     }
@@ -19,10 +18,13 @@ export const addTodo = async (req, res) => {
 export const getPost = async () => {
 
     try {
-        const { error, data } = await supabase.from("todoAssistant").select("*").order("created_at", { ascending: true })
+        const { data, error } = await supabase
+            .from("todoAssistant")
+            .select("*")
+            .order("created_at", { ascending: true });
 
         if (error) {
-              throw new Error(error||"Error in returning the todo.")
+            throw new Error(error || "Error in returning the todo.")
         }
         return res.status(200).json({ data: data, error: "" })
 
@@ -31,15 +33,29 @@ export const getPost = async () => {
     }
 }
 
-export const deletePost = async (req,res) => {
+export const deletePost = async (req, res) => {
     const { id } = req.params;
-       try {
+    try {
         const { error, data } = await supabase.from("todoAssistant").delete().eq("id", id)
         if (error) {
-            throw new Error(error||"Error in deleting the todo.")
+            throw new Error(error || "Error in deleting the todo.")
         }
         return res.status(200).json({ data: data, error: "" })
 
+    } catch (error) {
+        return res.status(500).json({ data: "", error: error.message || "Internal Server Error" });
+    }
+}
+
+export const editPost = async (req, res) => {
+    const { id } = req.params;
+    const { title, description, status } = req.body;
+    try {
+        const { error, data } = await supabase.from("todoAssistant").update({ title: title,text: description, completed:status }).eq("id", id).select();
+        if (error) {
+            throw new Error(error || "Error in deleting the todo.")
+        }
+        return res.status(200).json({ data: data, error: "" })
     } catch (error) {
         return res.status(500).json({ data: "", error: error.message || "Internal Server Error" });
     }
