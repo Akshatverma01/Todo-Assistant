@@ -71,12 +71,12 @@ function App() {
             }}
           >
             <Grid item xs={12} md={6}>
-              <Paper elevation={2} className="p-5 rounded-xl bg-white">
+              <Paper elevation={2} className="p-5 rounded-xl bg-white" style={{height:"100%"}}>
                 <TodoForm />
               </Paper>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Paper elevation={2} className="p-5 rounded-xl bg-white w-100">
+              <Paper elevation={2} className="p-5 rounded-xl bg-white w-100 h-100 overflow-y-scroll">
                 <div className="flex justify-between items-center mb-4">
                   <Typography variant="h6" className="text-gray-700">
                     {isSummary ? "Summary" : "Todo List"}

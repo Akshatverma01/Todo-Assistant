@@ -10,17 +10,22 @@ import {
 } from "@mui/material";
 
 const getStatusColor = (status) => {
-  switch (status.toLowerCase()) {
-    case "completed":
-      return "success";
-    case "pending":
-    default:
-      return "warning";
+  // switch (status.toLowerCase()) {
+  //   case "completed":
+  //     return "success";
+  //   case "pending":
+  //   default:
+  //     return "warning";
+  // }
+  if(status){
+    return "success";
+  }else{
+        return "warning"
   }
 };
 
 const TodoItem = ({ todo, onEdit, onDelete }) => {
-  const { title, description, status = "pending" } = todo;
+  const { title, text:description, completed:status = "pending" } = todo;
 
   return (
     <Card elevation={3} className="mb-4 rounded-xl shadow-md bg-white">
@@ -33,7 +38,7 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
             {title}
           </Typography>
           <Chip
-            label={status.charAt(0).toUpperCase() + status.slice(1)}
+            label={status?"Completed":"Pending"}
             color={getStatusColor(status)}
             size="small"
             variant="outlined"

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import TodoItem from "./TodoItem";
 import EditTodo from "./Modal";
 import { useEffect } from "react";
+import { CircularProgress } from "@mui/material";
 
 const TodoList = () => {
   const [open, setOpen] = React.useState(false);
@@ -10,13 +11,13 @@ const TodoList = () => {
 
   const [todos, setTodos] = useState([
     {
-      id: 1,
+      id: 11,
       title: "Finish project",
       description: "Complete the API integration",
       status: "pending",
     },
     {
-      id: 2,
+      id: 22,
       title: "Submit report",
       description: "Email the final draft",
       status: "completed",
@@ -27,14 +28,14 @@ const TodoList = () => {
     handleFetchTodo();
   }, [editTodo]);
 
+  // FETH TODO
   const handleFetchTodo = async (e) => {
     setLoading(true);
-
     try {
-         const response = await fetch("http://localhost:5000/");
+      const response = await fetch("http://localhost:5000/todo");
 
       if (!response.ok) throw new Error("Something went wrong!");
-      const {data} = await response.json();
+      const { data } = await response.json();
       console.log(data, "data");
 
       setTodos([...todos, ...data]);
@@ -45,17 +46,36 @@ const TodoList = () => {
     }
   };
 
-  const handleDelete = (todoToDelete) => {
-    const filtered = todos.filter((todo) => todo.id !== todoToDelete.id);
-    setTodos(filtered);
+  // DELET TODO
+  const handleDelete = async (todoToDelete) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/todo/${todoToDelete.id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      // if (!response.ok) throw new Error("Something went wrong!");
+      const { data } = await response.json();
+      console.log(data, "data");
+
+      const filtered = todos.filter((todo) => todo.id !== todoToDelete.id);
+      setTodos(filtered);
+    } catch (error) {
+      console.error("Failed to load:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-
-  const handleEdit = (todoToEdit) => {
+  // UPDATE TODO
+  const handleEdit = async (todoToEdit) => {
     if (todoToEdit) {
       setEditTodo(todoToEdit);
       setOpen(true);
       console.log("Edit clicked for:", todoToEdit);
+      
     }
   };
 
@@ -66,17 +86,32 @@ const TodoList = () => {
       )
     );
   };
+
   return (
-    <div>
-      {todos.map((todo) => (
-        <TodoItem
-          key={todo.id}
-          todo={todo}
-          onDelete={handleDelete}
-          onEdit={handleEdit}
-          onUpdate={handleUpdateTodo}
+    <div style={{ width: "100%" }}>
+      {loading ? (
+        <CircularProgress
+          size={50}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+          }}
         />
-      ))}
+      ) : (
+        todos &&
+        todos.length > 0 &&
+        todos.map((todo) => (
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            onDelete={handleDelete}
+            onEdit={handleEdit}
+            // onUpdate={handleUpdateTodo}
+          />
+        ))
+      )}
       {open && (
         <EditTodo
           open={open}

@@ -4,6 +4,8 @@ import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useEffect } from "react";
+import { useState } from "react";
+import { TextField, FormControlLabel, Checkbox, CircularProgress } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -17,10 +19,17 @@ const style = {
   p: 4,
 };
 
-export default function EditTodo({ open, setOpen, editTodo, setEditTodo,onUpdate  }) {
+export default function EditTodo({
+  open,
+  setOpen,
+  editTodo,
+  setEditTodo,
+  onUpdate,
+}) {
   const [formData, setFormData] = useState({ title: "", description: "" });
   const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
+  const [status, setStatus] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,14 +37,15 @@ export default function EditTodo({ open, setOpen, editTodo, setEditTodo,onUpdate
     setSuccessMsg("");
   };
 
-    useEffect(() => {
+  useEffect(() => {
     if (editTodo) {
       setFormData({
         title: editTodo.title || "",
-        description: editTodo.description || "",
+        description: editTodo.text || "",
       });
     }
   }, [editTodo]);
+  console.log(editTodo,"editTodo")
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,12 +53,11 @@ export default function EditTodo({ open, setOpen, editTodo, setEditTodo,onUpdate
 
     setLoading(true);
     setSuccessMsg("");
-
     try {
-      const response = await fetch(`http://localhost:5000/${editTodo?.id}`, {
-        method: "POST",
+      const response = await fetch(`http://localhost:5000/todo/${editTodo?.id}`, {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, status }),
       });
 
       const data = await response.json();
@@ -58,7 +67,6 @@ export default function EditTodo({ open, setOpen, editTodo, setEditTodo,onUpdate
 
       if (onUpdate) onUpdate({ ...editTodo, ...formData });
 
-      // Optionally: close modal after success
       setTimeout(() => {
         setOpen(false);
       }, 1500);
@@ -73,7 +81,6 @@ export default function EditTodo({ open, setOpen, editTodo, setEditTodo,onUpdate
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
       <Modal
         keepMounted
         open={open}
@@ -101,7 +108,17 @@ export default function EditTodo({ open, setOpen, editTodo, setEditTodo,onUpdate
               value={formData.description}
               onChange={handleChange}
             />
-
+            <FormControlLabel
+              label="completed"
+              control={
+                <Checkbox
+                  value="complete"
+                  checked={status}
+                  onChange={() => setStatus(!status)}
+                  color="primary"
+                />
+              }
+            />
             <div className="flex items-center gap-4">
               <Button
                 type="submit"
