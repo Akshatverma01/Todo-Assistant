@@ -64,7 +64,7 @@ function App() {
             spacing={4}
             sx={{
               display: { xs: "block", sm: "flex" ,md:"flex" },
-              flexDirection: { xs: "column", sm: "row" },
+              flexDirection: { xs: "column", sm: "row",md:"row" },
               justifyContent: "center",
               alignItems: "center",
               mt: 4,

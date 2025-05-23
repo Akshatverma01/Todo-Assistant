@@ -14,7 +14,8 @@ function Summary() {
   const handleFetchTodo = async (e) => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/todo");
+      const BASE_URL = import.meta.env.VITE_BASE_URL;
+      const response = await fetch(`${BASE_URL}/todo`);
 
       if (!response.ok) throw new Error("Something went wrong!");
       const { data } = await response.json();
@@ -31,7 +32,8 @@ function Summary() {
   const handleSummary = async (filteredTodo) => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/summarize", {
+         const BASE_URL = import.meta.env.VITE_BASE_URL;
+      const response = await fetch(`${BASE_URL}/summarize`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ incompleteTodo: filteredTodo }),

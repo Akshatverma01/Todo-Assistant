@@ -5,7 +5,12 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useEffect } from "react";
 import { useState } from "react";
-import { TextField, FormControlLabel, Checkbox, CircularProgress } from "@mui/material";
+import {
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  CircularProgress,
+} from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -53,7 +58,8 @@ export default function EditTodo({
     setLoading(true);
     setSuccessMsg("");
     try {
-      const response = await fetch(`http://localhost:5000/todo/${editTodo?.id}`, {
+      const BASE_URL = import.meta.env.VITE_BASE_URL;
+      const response = await fetch(`${BASE_URL}/todo/${editTodo?.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, status }),

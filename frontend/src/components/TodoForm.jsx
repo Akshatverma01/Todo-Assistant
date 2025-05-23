@@ -7,7 +7,6 @@ import {
   CircularProgress,
   Grid,
 } from "@mui/material";
-import TodoList from "./TodoList";
 
 const TodoForm = () => {
   const [formData, setFormData] = useState({ title: "", description: "" });
@@ -29,7 +28,8 @@ const TodoForm = () => {
     setSuccessMsg("");
 
     try {
-      const response = await fetch("http://localhost:5000/todo", {
+         const BASE_URL = import.meta.env.VITE_BASE_URL;
+      const response = await fetch(`${BASE_URL}/todo`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

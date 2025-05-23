@@ -32,7 +32,8 @@ const TodoList = () => {
   const handleFetchTodo = async (e) => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/todo");
+      const BASE_URL = import.meta.env.VITE_BASE_URL;
+      const response = await fetch(`${BASE_URL}/todo`);
 
       if (!response.ok) throw new Error("Something went wrong!");
       const { data } = await response.json();
@@ -47,12 +48,10 @@ const TodoList = () => {
   // DELET TODO
   const handleDelete = async (todoToDelete) => {
     try {
-      const response = await fetch(
-        `http://localhost:5000/todo/${todoToDelete.id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const BASE_URL = import.meta.env.VITE_BASE_URL;
+      const response = await fetch(`${BASE_URL}/todo/${todoToDelete.id}`, {
+        method: "DELETE",
+      });
 
       // if (!response.ok) throw new Error("Something went wrong!");
       const { data } = await response.json();
@@ -71,7 +70,6 @@ const TodoList = () => {
       setEditTodo(todoToEdit);
       setOpen(true);
       console.log("Edit clicked for:", todoToEdit);
-      
     }
   };
 
