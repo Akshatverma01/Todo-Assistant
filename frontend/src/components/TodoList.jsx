@@ -10,18 +10,18 @@ const TodoList = () => {
   const [editTodo, setEditTodo] = useState({});
 
   const [todos, setTodos] = useState([
-    // {
-    //   id: 11,
-    //   title: "Finish project",
-    //   description: "Complete the API integration",
-    //   status: "pending",
-    // },
-    // {
-    //   id: 22,
-    //   title: "Submit report",
-    //   description: "Email the final draft",
-    //   status: "completed",
-    // },
+    {
+      id: 11,
+      title: "Finish project",
+      description: "Complete the API integration",
+      status: "pending",
+    },
+    {
+      id: 22,
+      title: "Submit report",
+      description: "Email the final draft",
+      status: "completed",
+    },
   ]);
 
   useEffect(() => {
@@ -51,9 +51,9 @@ const TodoList = () => {
       const BASE_URL = import.meta.env.VITE_BASE_URL;
       const response = await fetch(`${BASE_URL}/todo/${todoToDelete.id}`, {
         method: "DELETE",
+        credentials: "include",
       });
 
-      // if (!response.ok) throw new Error("Something went wrong!");
       const { data } = await response.json();
       const filtered = todos.filter((todo) => todo.id !== todoToDelete.id);
       setTodos(filtered);
@@ -71,14 +71,6 @@ const TodoList = () => {
       setOpen(true);
       console.log("Edit clicked for:", todoToEdit);
     }
-  };
-
-  const handleUpdateTodo = (updatedTodo) => {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) =>
-        todo.id === updatedTodo.id ? { ...todo, ...updatedTodo } : todo
-      )
-    );
   };
 
   return (

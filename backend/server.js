@@ -18,7 +18,7 @@ const options = {
     "http://localhost:5173"
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", ],
+  allowedHeaders: ["Content-Type"]
 }
 app.use(cors(options));
 
