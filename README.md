@@ -3,7 +3,7 @@
 A full-stack productivity tool that allows users to manage to-do items, summarize pending tasks using an LLM (OpenAI), and send the summary to a Slack channel via webhook.
 
 ## 🚀 Live Demo
-
+ https://todo-assistant-rho.vercel.app/
 
 ## 🧩 Features
 
