@@ -108,3 +108,5 @@ cd ../frontend
 npm install
 npm run dev
 
+![image](https://github.com/user-attachments/assets/a53dd8f5-8706-4c5e-80a8-b3f7cc87097d)
+
