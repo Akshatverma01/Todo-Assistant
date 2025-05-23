@@ -5,6 +5,7 @@ import Markdown from "react-markdown";
 
 function Summary() {
   const [loading, setLoading] = useState(false);
+  const [summary, setSummary] = useState("");
 
   useEffect(() => {
     handleFetchTodo();

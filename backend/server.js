@@ -1,12 +1,11 @@
 import dotenv from "dotenv";
-dotenv.config({path: "../.env" });
+dotenv.config();
 
 import express from "express";
 import cors from "cors";
 import path from "path";
-import todoRoutes from "./routes/todo.Routes.js"
-import summarizeRoute from "./routes/summarize.route.js"
-
+import todoRoutes from "./src/routes/todo.Routes.js"
+import summarizeRoute from "./src/routes/summarize.route.js"
 
 const app = express();
 const PORT = process.env.PORT || 5000;

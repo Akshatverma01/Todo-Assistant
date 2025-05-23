@@ -2,7 +2,7 @@ import postToSlack from "../utils/slack.util.js";
 import generateContent from "../service/ai.service.js"
 
 export const summarize = async (req, res) => {
-    const apiKey = "AIzaSyAhxxbNhuw5MByPyHrvMiWTVp2G1uDhi10"
+    const apiKey =process.env.GEMINI_API_KEY
 
     const { incompleteTodo } = req.body;
     try {
