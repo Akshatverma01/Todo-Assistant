@@ -17,7 +17,6 @@ const generateSummary = async (summaryData, apiKey) => {
         return response.choices[0].message.content;
 
     } catch (error) {
-            console.error("OpenAI error:", error);
         return new Error(error)
     }
 

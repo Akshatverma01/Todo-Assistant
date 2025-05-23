@@ -10,18 +10,18 @@ const TodoList = () => {
   const [editTodo, setEditTodo] = useState({});
 
   const [todos, setTodos] = useState([
-    {
-      id: 11,
-      title: "Finish project",
-      description: "Complete the API integration",
-      status: "pending",
-    },
-    {
-      id: 22,
-      title: "Submit report",
-      description: "Email the final draft",
-      status: "completed",
-    },
+    // {
+    //   id: 11,
+    //   title: "Finish project",
+    //   description: "Complete the API integration",
+    //   status: "pending",
+    // },
+    // {
+    //   id: 22,
+    //   title: "Submit report",
+    //   description: "Email the final draft",
+    //   status: "completed",
+    // },
   ]);
 
   useEffect(() => {
@@ -36,8 +36,6 @@ const TodoList = () => {
 
       if (!response.ok) throw new Error("Something went wrong!");
       const { data } = await response.json();
-      console.log(data, "data");
-
       setTodos([...todos, ...data]);
     } catch (error) {
       console.error("Failed to load:", error);
@@ -58,8 +56,6 @@ const TodoList = () => {
 
       // if (!response.ok) throw new Error("Something went wrong!");
       const { data } = await response.json();
-      console.log(data, "data");
-
       const filtered = todos.filter((todo) => todo.id !== todoToDelete.id);
       setTodos(filtered);
     } catch (error) {

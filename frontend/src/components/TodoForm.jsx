@@ -36,7 +36,6 @@ const TodoForm = () => {
       });
 
       const data = await response.json();
-      console.log(data, "data");
       setTodoData([...todoData, data]);
       setSuccessMsg("Todo added successfully!");
       setFormData({ title: "", description: "" });

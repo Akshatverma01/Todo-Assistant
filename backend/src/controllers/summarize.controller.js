@@ -1,34 +1,24 @@
-import generateSummary from "../service/summary.client.js";
 import postToSlack from "../utils/slack.util.js";
+import generateContent from "../service/ai.service.js"
 
 export const summarize = async (req, res) => {
-
-    const apiKey = process.env.OPEN_API_KEY;
+    const apiKey = "AIzaSyAhxxbNhuw5MByPyHrvMiWTVp2G1uDhi10"
 
     const { incompleteTodo } = req.body;
-
     try {
 
-        if (!incompleteTodo || incompleteTodo.length === 0) {
-            return res.status(400).json({
-                message: "Missing in-complete todo items."
-            })
-        }
-
         // convert todo object into points for easy processing
-        const summaryTodo = incompleteTodo.map(todo => `${todo.title} :${todo.description}`).join("\n")
-
-        // call the llm to generate summary
-        const response = await generateSummary(summaryTodo, apiKey);
-
-        console.log(response);
-        if (response && response.data) {
-            await postToSlack(response.message)
+        const summaryTodo = incompleteTodo.map(todo => `${todo.title} :${todo.text}`).join("\n");
+      
+        const response = await generateContent(summaryTodo,apiKey);
+        if (response ) {
+            await postToSlack(response)
         }
-
-        return res.status(200).json({data:response.choices[0].message.content});
+        return res.status(200).json({ data: response });
 
     } catch (error) {
-        return res.status(500).json({ error: error.message || "Internal Server Error" });
+        return res.status(500).json({
+            error: error.message || "Internal Server Error"
+        });
     }
 }

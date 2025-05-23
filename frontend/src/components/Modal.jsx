@@ -45,7 +45,6 @@ export default function EditTodo({
       });
     }
   }, [editTodo]);
-  console.log(editTodo,"editTodo")
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,7 +60,6 @@ export default function EditTodo({
       });
 
       const data = await response.json();
-      console.log(data, "data");
       setSuccessMsg("Todo updated successfully!");
       setFormData({ title: "", description: "" });
 
