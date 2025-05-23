@@ -12,12 +12,10 @@ const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 
-app.use(
-  cors({
-    origin: "https://todo-assistant-rho.vercel.app/"||"http://localhost:5173",
+app.use(cors({
+    origin: "https://todo-assistant-rho.vercel.app",
     credentials: true,
-  })
-);
+  }));
 
 app.use("/todo", todoRoutes);
 app.use("/summarize", summarizeRoute)
